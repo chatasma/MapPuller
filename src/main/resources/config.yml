@@ -1,0 +1,6 @@
+source:
+  mapnames:
+    - Castles
+  target: "Maps"
+  repo: "WarzoneMC/Maps"
+  auth_token: ""

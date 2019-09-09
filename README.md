@@ -1,2 +1,2 @@
 # MapPuller
-pulls maps, wow
+pulls maps for Warzone, wow

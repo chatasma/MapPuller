@@ -1,0 +1,5 @@
+name: MapPuller
+description: Pulls map from Repo
+main: me.tqnk.mp.MapPuller
+version: 1.0
+api-version: 1.13
