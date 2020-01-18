@@ -1,2 +1,2 @@
 # MapPuller
-pulls maps for Warzone, wow
+Asynchronous Map Puller for GitHub hosted maps.
