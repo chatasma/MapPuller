@@ -89,8 +89,9 @@ public class MapScavenger {
             name = path;
         }
         else {
-            dir = path.substring(0, lastSlash + 1);
-            name = path.substring(lastSlash + 1);
+            lastSlash++;
+            dir = path.substring(0, lastSlash);
+            name = path.substring(lastSlash);
         }
         try {
             GithubContent target = null;
@@ -103,8 +104,10 @@ public class MapScavenger {
             }
             if (target == null) throw new IllegalArgumentException("File not found");
             if (target.getFileType().equals("file")) {
+                long currentTime = System.currentTimeMillis();
                 FileUtils.copyURLToFile(new URL(target.getDownloadLink()), new File(this.mapDest + "/" + dir + name), 10000, 10000);
-                Bukkit.getLogger().info("Single downloading finished!");
+                long elapsed = System.currentTimeMillis() - currentTime;
+                Bukkit.getLogger().info("Single download finished! (" + elapsed + "ms!)");
                 return;
             }
             loadMap(target, dir);
