@@ -79,10 +79,43 @@ public class MapScavenger {
             }
         }
     }
+
+    public void loadFile(String path) throws IllegalArgumentException {
+        String dir;
+        String name;
+        int lastSlash = path.lastIndexOf('/');
+        if (lastSlash == -1) {
+            dir = "";
+            name = path;
+        }
+        else {
+            dir = path.substring(0, lastSlash + 1);
+            name = path.substring(lastSlash + 1);
+        }
+        try {
+            GithubContent target = null;
+            GithubContent[] contents = getGithubContentFromUrl(url + "/" + dir, this.authUser, this.authPassword);
+            for (GithubContent content : contents) {
+                if (content.getImmediateName().equals(name)) {
+                    target = content;
+                    break;
+                }
+            }
+            if (target == null) throw new IllegalArgumentException("File not found");
+            if (target.getFileType().equals("file")) {
+                FileUtils.copyURLToFile(new URL(target.getDownloadLink()), new File(this.mapDest + "/" + dir + name), 10000, 10000);
+                Bukkit.getLogger().info("Single downloading finished!");
+                return;
+            }
+            loadMap(target, dir);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("File not found.");
+        }
+    }
+
     private String isInMapNamez(String candidate) {
         return (mapNamez.contains(candidate) ? candidate + "/" : "");
     }
-
 
     private static GithubContent[] getGithubContentFromUrl(String url, String authUser, String authPassword) {
         try {
