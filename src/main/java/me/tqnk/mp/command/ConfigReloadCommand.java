@@ -18,7 +18,7 @@ public class ConfigReloadCommand extends CommandModel {
     public void onCommand(CommandSender sender, String[] args) {
         if(!(sender instanceof Player)) return;
         Player target = (Player) sender;
-        if(!target.isOp()) {
+        if(!target.hasPermission("mappuller.reload")) {
             target.sendMessage(ChatColor.RED + "No permission");
             return;
         }
